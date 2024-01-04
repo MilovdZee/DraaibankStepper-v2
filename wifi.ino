@@ -21,7 +21,7 @@ void setup_wifi() {
       show_status_label(status);
     } else {
       String ipAddress = WiFi.localIP().toString();
-      Serial.printf("Connected to WiFi: %s", ipAddress);
+      Serial.printf("Connected to WiFi: %s\n", ipAddress);
       snprintf(status, bufSize, "Connected to\n#ffff00 %s#\n#00ffff %s#", settings.ssid, ipAddress);
       show_status_label(status);
     }
