@@ -29,6 +29,4 @@ void setup_ota() {
     Serial.printf("Error[%u]: %s\n", error, errorMessage);
   });
   ArduinoOTA.begin();
-
-  ota_available = true;
 }

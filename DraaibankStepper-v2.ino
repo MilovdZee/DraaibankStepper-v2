@@ -17,8 +17,6 @@ static lv_style_t style_status_label;
 static lv_style_t style_default;
 static lv_style_t style_small;
 
-static boolean ota_available = false;
-
 void setup() {
   Serial.begin(115200);
   Serial.println("Setup started");
@@ -48,7 +46,9 @@ void setup() {
 
 long position = 0;
 void loop() {
-  delay_for_millis(2000);
+  ArduinoOTA.handle();
+  lv_timer_handler();
+  stepper.run();
 }
 
 void delay_for_millis(int delay) {

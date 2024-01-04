@@ -20,7 +20,10 @@ static void setup_window_event_handler(lv_event_t *event) {
       case OK_BTN:
         Serial.println("OK button");
         save_settings();
-        lv_obj_del_async(setup_win);
+
+        // Wait a while before the restart
+        delay(2000);
+        ESP.restart();
         break;
       case CLOSE_BTN:
         Serial.println("Close button");
