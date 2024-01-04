@@ -12,6 +12,9 @@
 #define STEPPER_PULSE_PIN 27
 #define STEPPER_DIR_PIN 22
 
+#define OTA_PASSWORD "DraaibankStepperPassword"
+#define OTA_HOSTNAME "DraaibankStepper"
+
 // NTP server
 const char *ntpServer = "pool.ntp.org";
 

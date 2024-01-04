@@ -1,4 +1,4 @@
-void setupStepper() {
+void setup_stepper() {
   SettingsClass settings = get_settings();
   Serial.println("Configuring stepper driver:");
   Serial.printf("  - max_speed    : %d\n", settings.max_speed);

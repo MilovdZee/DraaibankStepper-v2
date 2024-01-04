@@ -1,7 +1,7 @@
 void setup_wifi() {
   // Write wifi connection status to screen
   SettingsClass settings = get_settings();
-  if (false && settings.ssid[0] != 0) {
+  if (settings.ssid[0] != 0) {
     int bufSize = 128;
     char status[bufSize];
     snprintf(status, bufSize, "Connecting to\n#ffff00 %s#\n.", settings.ssid);
@@ -20,9 +20,8 @@ void setup_wifi() {
       snprintf(status, bufSize, "Failed to connect to\n#ffff00 %s#", settings.ssid);
       show_status_label(status);
     } else {
-      Serial.println("Connected to WiFi");
       String ipAddress = WiFi.localIP().toString();
-      Serial.println(ipAddress);
+      Serial.printf("Connected to WiFi: %s", ipAddress);
       snprintf(status, bufSize, "Connected to\n#ffff00 %s#\n#00ffff %s#", settings.ssid, ipAddress);
       show_status_label(status);
     }

@@ -4,6 +4,7 @@
 #include <lvgl.h>
 #include <Preferences.h>
 #include <WiFi.h>
+#include <ArduinoOTA.h>
 #include "esp_sntp.h"
 #include <AccelStepper.h>
 
@@ -16,6 +17,8 @@ static lv_style_t style_status_label;
 static lv_style_t style_default;
 static lv_style_t style_small;
 
+static boolean ota_available = false;
+
 void setup() {
   Serial.begin(115200);
   Serial.println("Setup started");
@@ -27,8 +30,9 @@ void setup() {
   char *ssid = get_settings().ssid;
   if (ssid[0] != 0) {
     setup_wifi();
+    setup_ota();
     setup_ntp();
-    setupStepper();
+    setup_stepper();
   } else {
     show_status_label("Not configured");
     delay_for_millis(2000);
@@ -52,5 +56,6 @@ void delay_for_millis(int delay) {
   while (millis() - start < delay) {
     lv_timer_handler();
     stepper.run();
+    ArduinoOTA.handle();
   }
 }

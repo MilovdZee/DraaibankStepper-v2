@@ -15,7 +15,7 @@ void set_timezone(String timezone) {
 
 // callback function to show when NTP was synchronized
 void cb_sync_time(struct timeval *tv) {
-  Serial.println(F("NTP time synched"));
+  Serial.print("NTP time synched: ");
   print_local_time();
 }
 
