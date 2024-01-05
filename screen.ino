@@ -162,3 +162,25 @@ lv_obj_t *button(lv_obj_t *win, const char *label, const int width, const int he
 
   return btn;
 }
+
+void add_state_on_all_objects_of_class(lv_obj_t *parent, const lv_obj_class_t *class_p, lv_state_t state) {
+  int child_count = lv_obj_get_child_cnt(parent);
+  for (int i = 0; i < child_count; i++) {
+    lv_obj_t *child = lv_obj_get_child(parent, i);
+    if (lv_obj_check_type(child, class_p)) {
+      lv_obj_add_state(child, state);
+    }
+    add_state_on_all_objects_of_class(child, class_p, state);
+  }
+}
+
+void clear_state_on_all_objects_of_class(lv_obj_t *parent, const lv_obj_class_t *class_p, lv_state_t state) {
+  int child_count = lv_obj_get_child_cnt(parent);
+  for (int i = 0; i < child_count; i++) {
+    lv_obj_t *child = lv_obj_get_child(parent, i);
+    if (lv_obj_check_type(child, class_p)) {
+      lv_obj_clear_state(child, state);
+    }
+    clear_state_on_all_objects_of_class(child, class_p, state);
+  }
+}

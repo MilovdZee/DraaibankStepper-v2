@@ -45,10 +45,21 @@ void setup() {
 }
 
 long position = 0;
+boolean previous_running_state = false;
 void loop() {
   ArduinoOTA.handle();
   lv_timer_handler();
   stepper.run();
+
+  if (stepper.isRunning() != previous_running_state) {
+    if (!previous_running_state) {
+      add_state_on_all_objects_of_class(get_screen_main(), &lv_btn_class, LV_STATE_DISABLED);
+      previous_running_state = true;
+    } else {
+      clear_state_on_all_objects_of_class(get_screen_main(), &lv_btn_class, LV_STATE_DISABLED);
+      previous_running_state = false;
+    }
+  }
 }
 
 void delay_for_millis(int delay) {

@@ -48,7 +48,7 @@ static void degrees_window_button_handler(lv_event_t *event) {
   lv_event_code_t code = lv_event_get_code(event);
   if (code == LV_EVENT_CLICKED) {
     if(stepper.isRunning()) return;
-    
+
     lv_obj_t *obj = lv_event_get_target(event);
     int btnId = lv_obj_get_index(obj);
     Serial.printf("Button %d clicked: ", btnId);
