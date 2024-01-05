@@ -5,6 +5,8 @@ void setup_stepper() {
   Serial.printf("  - acceleration : %d\n", settings.acceleration);
   stepper.setMaxSpeed(settings.max_speed);
   stepper.setAcceleration(settings.acceleration);
+  stepper.setPinsInverted(false, true, false);
+  stepper.setMinPulseWidth(100); // minimal 100us pulsewidth
 }
 
 AccelStepper get_stepper() {

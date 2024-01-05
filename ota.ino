@@ -2,6 +2,8 @@ static lv_obj_t* progress_meter;
 lv_meter_indicator_t* progress_indicator;
 
 static void ota_start() {
+  digitalWrite(RGB_RED_PIN, LOW);
+
   lv_obj_t* main = get_screen_main();
   lv_obj_clean(main);
   lv_obj_add_style(main, &style_small, 0);
@@ -29,10 +31,7 @@ void setup_ota() {
 
   // Setup OTA updates
   ArduinoOTA.setPort(3232);  // default 3232
-
-  char buffer[50];
-  snprintf(buffer, sizeof(buffer), "%s_%d", OTA_HOSTNAME, random(9999));
-  ArduinoOTA.setHostname(buffer);
+  ArduinoOTA.setHostname(OTA_HOSTNAME);
   ArduinoOTA.setPassword(OTA_PASSWORD);
 
   ArduinoOTA.onStart([]() {

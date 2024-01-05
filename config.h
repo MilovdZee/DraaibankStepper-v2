@@ -9,8 +9,12 @@
 
 #define HEADER_HEIGHT 30
 
-#define STEPPER_PULSE_PIN 16
-#define STEPPER_DIR_PIN 17
+#define RGB_RED_PIN 4
+#define RGB_GREEN_PIN 16
+#define RGB_BLUE_PIN 17
+
+#define STEPPER_PULSE_PIN RGB_GREEN_PIN
+#define STEPPER_DIR_PIN RGB_BLUE_PIN
 
 #define OTA_PASSWORD "DraaibankStepperPassword"
 #define OTA_HOSTNAME "DraaibankStepper"
