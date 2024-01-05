@@ -54,7 +54,7 @@ long position = 0;
 boolean previous_running_state = false;
 void loop() {
   ArduinoOTA.handle();
-  lv_timer_handler();
+  lv_timer_handler_run_in_period(5);
   stepper.run();
 
   if (stepper.isRunning() != previous_running_state) {
@@ -73,7 +73,7 @@ void loop() {
 void delay_for_millis(int delay) {
   unsigned long start = millis();
   while (millis() - start < delay) {
-    lv_timer_handler();
+    lv_timer_handler_run_in_period(5);
     stepper.run();
     ArduinoOTA.handle();
   }

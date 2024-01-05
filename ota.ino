@@ -44,12 +44,14 @@ void setup_ota() {
   ArduinoOTA.onProgress([](int progress, int total) {
     static int last_shown = 0;
     int percentage = progress * 100 / total;
-    if (percentage % 10 == 0 && last_shown != percentage) {
-      Serial.printf("OTA update progress: %u\r\n", percentage);
+    if (last_shown != percentage) {
+      if (percentage % 10 == 0) {
+        Serial.printf("OTA update progress: %u\r\n", percentage);
+      }
+      lv_meter_set_indicator_end_value(progress_meter, progress_indicator, percentage);
+      lv_timer_handler();
       last_shown = percentage;
     }
-    lv_meter_set_indicator_end_value(progress_meter, progress_indicator, percentage);
-    lv_timer_handler();
   });
   ArduinoOTA.onError([](ota_error_t error) {
     char* errorMessage = "Unknown";
