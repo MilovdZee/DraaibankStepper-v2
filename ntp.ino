@@ -17,6 +17,7 @@ void set_timezone(String timezone) {
 void cb_sync_time(struct timeval *tv) {
   Serial.print("NTP time synched: ");
   print_local_time();
+  Serial.println();
 }
 
 void print_local_time() {
