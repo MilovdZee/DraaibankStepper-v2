@@ -21,13 +21,9 @@ void setup() {
   Serial.begin(115200);
   Serial.println("Setup started");
 
-  // Switch off all colors of the RGB LED
+  // Switch off the RED color of the RGB LED
   pinMode(RGB_RED_PIN, OUTPUT);
-  pinMode(RGB_GREEN_PIN, OUTPUT);
-  pinMode(RGB_BLUE_PIN, OUTPUT);
   digitalWrite(RGB_RED_PIN, HIGH);
-  digitalWrite(RGB_GREEN_PIN, HIGH);
-  digitalWrite(RGB_BLUE_PIN, HIGH);
 
   read_settings();
 
