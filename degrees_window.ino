@@ -166,6 +166,15 @@ void create_degrees_spinner() {
 void update_step_label() {
   char buffer[BUFFER_SIZE];
   float degrees_per_btn_press = (float)lv_spinbox_get_value(degrees_spinner) / (float)DEGREE_DIVIDER;
-  snprintf(buffer, BUFFER_SIZE, "%d: %.1f", current_degree_step - POSITIONS / 2, degrees_per_btn_press * (float)(current_degree_step - POSITIONS / 2));
+  float requested_degrees = degrees_per_btn_press * (float)(current_degree_step - POSITIONS / 2);
+  float position = (float)degrees_positions[current_degree_step];
+  SettingsClass settings = get_settings();
+  float steps_per_revolution = (float)settings.steps_per_revolution;
+  float real_degrees = position * 360.0 / steps_per_revolution;
+  if(abs(real_degrees - requested_degrees) > .05) {
+    snprintf(buffer, BUFFER_SIZE, "%d: %.1f (req %.1f)", current_degree_step - POSITIONS / 2, real_degrees, requested_degrees);
+  } else {
+    snprintf(buffer, BUFFER_SIZE, "%d: %.1f", current_degree_step - POSITIONS / 2, real_degrees);
+  }
   lv_label_set_text(current_degree_step_label, buffer);
 }
