@@ -4,8 +4,11 @@
 
 #define MAX_TEETH 500
 
+#define BUFFER_SIZE 30
+
 lv_obj_t *teeth_win;
 lv_obj_t *teeth_count_spinner;
+lv_obj_t *current_tooth_label;
 
 static long positions[MAX_TEETH + 1];
 static int current_tooth;
@@ -29,9 +32,11 @@ static void teeth_window_header_event_handler(lv_event_t *event) {
 
 void recalc_teeth_positions() {
   int teeth = lv_spinbox_get_value(teeth_count_spinner);
+  if (teeth == 0) teeth = 1;
+
   SettingsClass settings = get_settings();
   float steps_per_tooth = (float)settings.steps_per_revolution / (float)teeth;
-  Serial.printf("Number of steps per tooth: %f\n", steps_per_tooth);
+  Serial.printf("Number of steps per tooth: %.1f\n", steps_per_tooth);
 
   // Fill the array with all tooth positions
   for (int i = 0; i < teeth; i++) {
@@ -42,6 +47,9 @@ void recalc_teeth_positions() {
   // Always reset after changing the number of teeth
   current_tooth = 0;
   stepper.setCurrentPosition(0);
+  char buffer[BUFFER_SIZE];
+  snprintf(buffer, BUFFER_SIZE, "%d / %d", current_tooth + 1, teeth);
+  lv_label_set_text(current_tooth_label, buffer);
 }
 
 static void teeth_increment_event_cb(lv_event_t *e) {
@@ -61,14 +69,19 @@ static void teeth_decrement_event_cb(lv_event_t *e) {
 }
 
 static void teeth_window_button_handler(lv_event_t *event) {
-  int teeth = lv_spinbox_get_value(teeth_count_spinner);
-
   lv_event_code_t code = lv_event_get_code(event);
   if (code == LV_EVENT_CLICKED) {
-    if(stepper.isRunning()) return;
+    if (stepper.isRunning()) return;
+
+    int teeth = lv_spinbox_get_value(teeth_count_spinner);
+    if (teeth == 0) {
+      show_status_label("Number of teeth not set", true);
+      return;
+    }
 
     lv_obj_t *obj = lv_event_get_target(event);
     int btnId = lv_obj_get_index(obj);
+    char buffer[BUFFER_SIZE];
     Serial.printf("Button %d clicked: ", btnId);
     switch (btnId) {
       case BACK_BTN:
@@ -78,7 +91,9 @@ static void teeth_window_button_handler(lv_event_t *event) {
           stepper.setCurrentPosition(positions[teeth]);
         }
 
-        Serial.printf("BACKWARD to tooth %d on position %ld\n", current_tooth, positions[current_tooth]);
+        Serial.printf("BACKWARD to tooth %d on position %ld\n", current_tooth + 1, positions[current_tooth]);
+        snprintf(buffer, BUFFER_SIZE, "%d / %d", current_tooth + 1, teeth);
+        lv_label_set_text(current_tooth_label, buffer);
         stepper.moveTo(positions[current_tooth]);
         break;
       case FORWARD_BTN:
@@ -88,7 +103,9 @@ static void teeth_window_button_handler(lv_event_t *event) {
           stepper.setCurrentPosition(0);
         }
 
-        Serial.printf("FORWARD to tooth %d on position %ld\n", current_tooth, positions[current_tooth]);
+        Serial.printf("FORWARD to tooth %d on position %ld\n", current_tooth % teeth + 1, positions[current_tooth]);
+        snprintf(buffer, BUFFER_SIZE, "%d / %d", current_tooth % teeth + 1, teeth);
+        lv_label_set_text(current_tooth_label, buffer);
         stepper.moveTo(positions[current_tooth]);
         break;
       default:
@@ -105,8 +122,9 @@ void teeth_window() {
 
   create_teeth_count_spinner();
   int button_width = SCREEN_WIDTH / 2 - 30;
-  button(teeth_win, "BACK", button_width, 70, -button_width / 2 - 10, 100, teeth_window_button_handler);
-  button(teeth_win, "FORWARD", button_width, 70, button_width / 2 + 10, 100, teeth_window_button_handler);
+  button(teeth_win, "BACK", button_width, 70, -button_width / 2 - 10, 70, teeth_window_button_handler);
+  button(teeth_win, "FORWARD", button_width, 70, button_width / 2 + 10, 70, teeth_window_button_handler);
+  current_tooth_label = label(teeth_win, "-", 0, 160);
 
   recalc_teeth_positions();
 }
@@ -114,9 +132,10 @@ void teeth_window() {
 void create_teeth_count_spinner() {
   lv_obj_t *cont = lv_win_get_content(teeth_win);
   teeth_count_spinner = lv_spinbox_create(cont);
-  lv_spinbox_set_range(teeth_count_spinner, 1, MAX_TEETH);
+  lv_spinbox_set_range(teeth_count_spinner, 0, MAX_TEETH);
   lv_spinbox_set_digit_format(teeth_count_spinner, 3, 0);
   lv_spinbox_step_prev(teeth_count_spinner);
+  lv_spinbox_set_cursor_pos(teeth_count_spinner, 0);
   lv_obj_set_width(teeth_count_spinner, 70);
   lv_obj_align(teeth_count_spinner, LV_ALIGN_TOP_MID, 0, 5);
 

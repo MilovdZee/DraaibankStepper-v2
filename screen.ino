@@ -162,6 +162,17 @@ lv_obj_t *button(lv_obj_t *win, const char *label, const int width, const int he
   return btn;
 }
 
+lv_obj_t *label(lv_obj_t *win, const char *label_text, const int x_offset, const int y_offset) {
+  lv_obj_t *cont = lv_win_get_content(win);
+
+  lv_obj_t *label = lv_label_create(cont);
+  lv_obj_align(label, LV_ALIGN_TOP_MID, x_offset, y_offset);
+  lv_label_set_text(label, label_text);
+  lv_label_set_recolor(label, true);
+
+  return label;
+}
+
 void add_state_on_all_objects_of_class(lv_obj_t *parent, const lv_obj_class_t *class_p, lv_state_t state) {
   int child_count = lv_obj_get_child_cnt(parent);
   for (int i = 0; i < child_count; i++) {
