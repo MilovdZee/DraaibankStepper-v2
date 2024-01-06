@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define EEPROM_CHECK_STRING "EEPROM001"
+#define EEPROM_CHECK_STRING "EEPROM002"
 
 /* Change to your screen resolution */
 #define SCREEN_WIDTH 320
@@ -48,9 +48,9 @@ public:
     ssid[0] = 0;
     wifi_password[0] = 0;
     brightness = 50;
-    max_speed = 100;
-    acceleration = 50;
-    steps_per_revolution = 36000;
+    max_speed = 5000;
+    acceleration = 2000;
+    steps_per_revolution = 800;
   };
 
   SettingsClass(const char *ssid, const char *wifi_password, int brightness, int max_speed, int acceleration, long steps_per_revolution) {

@@ -29,7 +29,7 @@ void read_settings() {
   }
 
   Serial.printf("settings.eeprom_check: '%s'\n", settings.eeprom_check);
-  if (strncmp(settings.eeprom_check, EEPROM_CHECK_STRING, sizeof(EEPROM_CHECK_STRING)) == 0) {
+  if (check_validity(settings)) {
     Serial.println("EEPROM data found");
   } else {
     Serial.println("EEPROM data NOT found");
@@ -44,6 +44,10 @@ void write_settings(SettingsClass newSettings) {
     return;
   }
   settings = newSettings;
+}
+
+boolean check_validity(SettingsClass settings) {
+  return strncmp(settings.eeprom_check, EEPROM_CHECK_STRING, sizeof(EEPROM_CHECK_STRING)) == 0;
 }
 
 SettingsClass get_settings() {

@@ -11,7 +11,7 @@ static void main_window_header_event_handler(lv_event_t *event) {
     switch (btnId) {
       case SETUP_BTN:
         Serial.println("Setup button");
-        setup_window();
+        setup_window(true);
         break;
       default:
         Serial.println("Unknown button");

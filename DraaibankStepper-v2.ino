@@ -33,21 +33,22 @@ void setup() {
 
   setup_screen();
   setup_touch();
-  char *ssid = get_settings().ssid;
-  if (ssid[0] != 0) {
+  if (check_validity(get_settings())) {
     setup_wifi();
     setup_ota();
     setup_ntp();
     setup_stepper();
+
+    main_window();
   } else {
     show_status_label("Not configured");
     delay_for_millis(2000);
     hide_status_label();
+
+    setup_window(false);
   }
 
   Serial.println("Setup finished");
-
-  main_window();
 }
 
 long position = 0;

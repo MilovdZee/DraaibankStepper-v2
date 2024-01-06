@@ -35,14 +35,17 @@ static void setup_window_event_handler(lv_event_t *event) {
   }
 }
 
-void setup_window() {
+void setup_window(boolean show_close_button) {
   setup_win = lv_win_create(get_screen_main(), 20);
   lv_win_add_title(setup_win, "Config");
   lv_obj_add_style(setup_win, &style_small, 0);
   lv_obj_t *btn = lv_win_add_btn(setup_win, LV_SYMBOL_OK, 30);
   lv_obj_add_event_cb(btn, setup_window_event_handler, LV_EVENT_CLICKED, NULL);
-  btn = lv_win_add_btn(setup_win, LV_SYMBOL_CLOSE, 30);
-  lv_obj_add_event_cb(btn, setup_window_event_handler, LV_EVENT_CLICKED, NULL);
+
+  if (show_close_button) {
+    btn = lv_win_add_btn(setup_win, LV_SYMBOL_CLOSE, 30);
+    lv_obj_add_event_cb(btn, setup_window_event_handler, LV_EVENT_CLICKED, NULL);
+  }
 
   SettingsClass settings = get_settings();
   ssid_input = input_line(setup_win, "SSID: ", 0, settings.ssid);
