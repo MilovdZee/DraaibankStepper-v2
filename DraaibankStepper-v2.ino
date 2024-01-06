@@ -37,10 +37,7 @@ void setup() {
 
     main_window();
   } else {
-    show_status_label("Not configured");
-    delay_for_millis(2000);
-    hide_status_label();
-
+    show_status_label("Not configured", true);
     setup_window(false);
   }
 

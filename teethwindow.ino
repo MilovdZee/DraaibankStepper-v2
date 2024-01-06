@@ -4,9 +4,8 @@
 
 #define MAX_TEETH 500
 
-static lv_obj_t *teeth_win;
-
-static lv_obj_t *teeth_count_spinner;
+lv_obj_t *teeth_win;
+lv_obj_t *teeth_count_spinner;
 
 static long positions[MAX_TEETH + 1];
 static int current_tooth;
@@ -108,6 +107,8 @@ void teeth_window() {
   int button_width = SCREEN_WIDTH / 2 - 30;
   button(teeth_win, "BACK", button_width, 70, -button_width / 2 - 10, 100, teeth_window_button_handler);
   button(teeth_win, "FORWARD", button_width, 70, button_width / 2 + 10, 100, teeth_window_button_handler);
+
+  recalc_teeth_positions();
 }
 
 void create_teeth_count_spinner() {

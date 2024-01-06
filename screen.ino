@@ -1,7 +1,7 @@
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t buf[SCREEN_WIDTH * 10];
 
-lv_obj_t *screenMain;
+lv_obj_t *screen_main;
 
 static lv_obj_t *kb;
 
@@ -32,10 +32,10 @@ void setup_screen() {
   set_default_style();
   set_small_style();
 
-  screenMain = lv_obj_create(NULL);
-  lv_obj_set_style_bg_color(screenMain, lv_color_black(), LV_PART_MAIN);
-  lv_obj_add_style(screenMain, &style_default, 0);
-  lv_scr_load(screenMain);
+  screen_main = lv_obj_create(NULL);
+  lv_obj_set_style_bg_color(screen_main, lv_color_black(), LV_PART_MAIN);
+  lv_obj_add_style(screen_main, &style_default, 0);
+  lv_scr_load(screen_main);
 }
 
 // /* Display flushing */
@@ -75,28 +75,27 @@ void set_small_style() {
   lv_style_set_text_font(&style_small, &lv_font_montserrat_14);
 }
 
-void show_status_label(const char *statusText) {
-  hide_status_label();
+void show_status_label(const char *statusText, boolean add_close_btn) {
+  char *title_text = NULL;
+  if (add_close_btn) title_text = "#ff0000 Alert#";
+  status_label = lv_msgbox_create(NULL, title_text, statusText, NULL, add_close_btn);
+  lv_obj_center(status_label);
 
-  status_label = lv_label_create(screenMain);
-  lv_obj_add_style(status_label, &style_status_label, 0);
-  lv_obj_set_size(status_label, SCREEN_WIDTH, 120);
-  lv_obj_set_pos(status_label, 0, (SCREEN_HEIGHT - 120) / 2);
-  lv_label_set_recolor(status_label, true);
-  lv_label_set_long_mode(status_label, LV_LABEL_LONG_SCROLL_CIRCULAR);
-
-  lv_label_set_text(status_label, statusText);
+  if (add_close_btn) {
+    lv_obj_t *title = lv_msgbox_get_title(status_label);
+    lv_label_set_recolor(title, true);
+  }
+  lv_obj_t *text = lv_msgbox_get_text(status_label);
+  lv_label_set_recolor(text, true);
+  lv_obj_add_style(text, &style_default, 0);
 }
 
 void hide_status_label() {
-  if (status_label) {
-    lv_obj_del(status_label);
-    status_label = NULL;
-  }
+  lv_msgbox_close(status_label);
 }
 
 lv_obj_t *get_screen_main() {
-  return screenMain;
+  return screen_main;
 }
 
 static void ta_event_cb(lv_event_t *event) {

@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define EEPROM_CHECK_STRING "EEPROM002"
+#define EEPROM_CHECK_STRING "EEPROM003"
 
 /* Change to your screen resolution */
 #define SCREEN_WIDTH 320
