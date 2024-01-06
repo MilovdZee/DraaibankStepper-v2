@@ -5,6 +5,7 @@
 #include <Preferences.h>
 #include <WiFi.h>
 #include <ArduinoOTA.h>
+#include <Update.h>
 #include "esp_sntp.h"
 #include <AccelStepper.h>
 
