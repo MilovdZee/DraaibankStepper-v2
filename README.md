@@ -23,10 +23,8 @@ There are connectors on the board but there is only one supplied with the displa
 
 Steps and direction:
 
-<img src="https://raw.githubusercontent.com/MilovdZee/DraaibankStepper-v2/main/images/Pulse_and_direction_1.jpeg" height=300/>
-<img src="https://raw.githubusercontent.com/MilovdZee/DraaibankStepper-v2/main/images/Pulse_and_direction_2.jpeg" height=300/>
+<img src="https://raw.githubusercontent.com/MilovdZee/DraaibankStepper-v2/main/images/Pulse_and_direction_1.jpeg" height=300/> <img src="https://raw.githubusercontent.com/MilovdZee/DraaibankStepper-v2/main/images/Pulse_and_direction_2.jpeg" height=300/>
 
 Power:
 
-<img src="https://raw.githubusercontent.com/MilovdZee/DraaibankStepper-v2/main/images/Power_1.jpeg" height=300/>
-<img src="https://raw.githubusercontent.com/MilovdZee/DraaibankStepper-v2/main/images/Power_2.jpeg" height=300/>
+<img src="https://raw.githubusercontent.com/MilovdZee/DraaibankStepper-v2/main/images/Power_1.jpeg" height=300/> <img src="https://raw.githubusercontent.com/MilovdZee/DraaibankStepper-v2/main/images/Power_2.jpeg" height=300/>
