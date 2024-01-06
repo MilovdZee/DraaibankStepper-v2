@@ -19,7 +19,7 @@ Copy the file `lv_conf.h`
    - add the path as include path
 
 ## wiring ##
-There are connectors on the board but there is only one supplied with the display. I opted for soldering directly on the board.
+There are sockets on the board but there is only one plug with wiring supplied with the display. I opted for soldering directly on the board.
 
 Steps and direction:
 
