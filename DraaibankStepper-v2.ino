@@ -50,7 +50,7 @@ void setup() {
   if(newest_version > CURRENT_FIRMWARE_VERSION) {
     show_status_label("Updating firmware...", false);
     lv_timer_handler();
-    read_firmware(newest_version);
+    update_firmware(newest_version);
   }
 }
 

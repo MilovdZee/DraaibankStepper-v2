@@ -79,7 +79,7 @@ int get_update_version() {
 
   // request the version file
   Serial.printf("Requesting '%s'\n", VERSION_FILE_LOCATION);
-  String get_request = String("GET ") + VERSION_FILE_LOCATION + " HTTP/1.0\r\n" + "Host: " + UPDATE_HOST + "\r\n" + "User-Agent: ESP32\r\n" + "\r\n";
+  String get_request = String("GET ") + VERSION_FILE_LOCATION + " HTTP/1.0\r\n" + "Host: " + UPDATE_HOST + "\r\n" + "User-Agent: ESP32\r\n" + "Cache-Control: no-cache\r\n" + "\r\n";
   client.print(get_request);
 
   int newest_version = ERROR_VALUE;
@@ -103,7 +103,7 @@ int get_update_version() {
   return newest_version;
 }
 
-void read_firmware(int version) {
+void update_firmware(int version) {
   if (!connect_to_host()) return;
 
   // request the version file
@@ -119,12 +119,16 @@ void read_firmware(int version) {
       bool can_begin = Update.begin(content_length);
       if (can_begin) {
         Serial.printf("Begin OTA of %ld bytes...\n", content_length);
+        hide_status_label();
+        ota_start();
+        Update.onProgress(ota_on_progress);
+
         size_t written = Update.writeStream(client);
 
         if (written == content_length) {
           Serial.println("Firmware written successfully");
         } else {
-          Serial.printf("Firmware not completely written!");
+          Serial.println("Firmware not completely written!");
         }
 
         if (Update.end()) {

@@ -1,5 +1,5 @@
-static lv_obj_t* progress_meter;
-lv_meter_indicator_t* progress_indicator;
+static lv_obj_t* ota_progress_meter;
+lv_meter_indicator_t* ota_progress_indicator;
 
 static void ota_start() {
   digitalWrite(RGB_RED_PIN, LOW);
@@ -8,22 +8,35 @@ static void ota_start() {
   lv_obj_clean(main);
   lv_obj_add_style(main, &style_small, 0);
 
-  progress_meter = lv_meter_create(main);
-  lv_obj_center(progress_meter);
-  lv_obj_set_size(progress_meter, 200, 200);
+  ota_progress_meter = lv_meter_create(main);
+  lv_obj_center(ota_progress_meter);
+  lv_obj_set_size(ota_progress_meter, 200, 200);
 
-  lv_obj_remove_style(progress_meter, NULL, LV_PART_INDICATOR);
+  lv_obj_remove_style(ota_progress_meter, NULL, LV_PART_INDICATOR);
 
-  lv_meter_scale_t* scale = lv_meter_add_scale(progress_meter);
-  lv_meter_set_scale_ticks(progress_meter, scale, 11, 2, 10, lv_palette_main(LV_PALETTE_GREY));
-  lv_meter_set_scale_major_ticks(progress_meter, scale, 1, 2, 20, lv_color_hex3(0xeee), 10);
-  lv_meter_set_scale_range(progress_meter, scale, 0, 100, 270, 90);
+  lv_meter_scale_t* scale = lv_meter_add_scale(ota_progress_meter);
+  lv_meter_set_scale_ticks(ota_progress_meter, scale, 11, 2, 10, lv_palette_main(LV_PALETTE_GREY));
+  lv_meter_set_scale_major_ticks(ota_progress_meter, scale, 1, 2, 20, lv_color_hex3(0xeee), 10);
+  lv_meter_set_scale_range(ota_progress_meter, scale, 0, 100, 270, 90);
 
-  progress_indicator = lv_meter_add_arc(progress_meter, scale, 10, lv_palette_main(LV_PALETTE_RED), 0);
-  lv_meter_set_indicator_start_value(progress_meter, progress_indicator, 0);
-  lv_meter_set_indicator_end_value(progress_meter, progress_indicator, 0);
+  ota_progress_indicator = lv_meter_add_arc(ota_progress_meter, scale, 10, lv_palette_main(LV_PALETTE_RED), 0);
+  lv_meter_set_indicator_start_value(ota_progress_meter, ota_progress_indicator, 0);
+  lv_meter_set_indicator_end_value(ota_progress_meter, ota_progress_indicator, 0);
 
   lv_timer_handler();
+}
+
+void ota_on_progress(int progress, int total) {
+  static int last_shown = 0;
+  int percentage = progress * 100 / total;
+  if (last_shown != percentage) {
+    if (percentage % 10 == 0) {
+      Serial.printf("OTA update progress: %u\r\n", percentage);
+    }
+    lv_meter_set_indicator_end_value(ota_progress_meter, ota_progress_indicator, percentage);
+    lv_timer_handler();
+    last_shown = percentage;
+  }
 }
 
 void setup_ota() {
@@ -41,18 +54,7 @@ void setup_ota() {
   ArduinoOTA.onEnd([]() {
     Serial.println("OTA update end");
   });
-  ArduinoOTA.onProgress([](int progress, int total) {
-    static int last_shown = 0;
-    int percentage = progress * 100 / total;
-    if (last_shown != percentage) {
-      if (percentage % 10 == 0) {
-        Serial.printf("OTA update progress: %u\r\n", percentage);
-      }
-      lv_meter_set_indicator_end_value(progress_meter, progress_indicator, percentage);
-      lv_timer_handler();
-      last_shown = percentage;
-    }
-  });
+  ArduinoOTA.onProgress(ota_on_progress);
   ArduinoOTA.onError([](ota_error_t error) {
     char* errorMessage = "Unknown";
     if (error == OTA_AUTH_ERROR) errorMessage = "Auth Failed";
