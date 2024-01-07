@@ -21,12 +21,11 @@ Steps:
 - setup wifi on the device and note the `ip address`
 - run `python espota.py -r -i <ip address> --auth=DraaibankStepperPassword -f <firmware file>`
 
-If there is no wifi then an update through USB is also possible:
-- install python
+If there is no wifi then an update through USB is also possible (no python needed):
 - download [esptool](https://github.com/espressif/esptool) (there are zip files under [releases](https://github.com/espressif/esptool/releases))
 - download the latest `.bin` file from [firmware](https://github.com/MilovdZee/DraaibankStepper-v2/tree/main/firmware)
 - connect the device through USB and note the `USB port` used
-- run `esptool.py --chip esp32 --port "<USB port>" --baud 921600  --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x10000 "<firmware file>"`
+- run `esptool --chip esp32 --port "<USB port>" --baud 921600  --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x10000 "<firmware file>"`
 
 ## setup ##
 Copy the file `lv_conf.h`
