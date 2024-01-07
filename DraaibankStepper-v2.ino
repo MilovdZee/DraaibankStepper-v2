@@ -45,12 +45,14 @@ void setup() {
 
   Serial.println("Setup finished");
 
-  Serial.printf("Checking for firmware updates... (currently %d)\n", CURRENT_FIRMWARE_VERSION);
-  int newest_version = get_update_version();
-  if(newest_version > CURRENT_FIRMWARE_VERSION) {
-    show_status_label("Updating firmware...", false);
-    lv_timer_handler();
-    update_firmware(newest_version);
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.printf("Checking for firmware updates... (currently %d)\n", CURRENT_FIRMWARE_VERSION);
+    int newest_version = get_update_version();
+    if (newest_version > CURRENT_FIRMWARE_VERSION) {
+      show_status_label("Updating firmware...", false);
+      lv_timer_handler();
+      update_firmware(newest_version);
+    }
   }
 }
 
