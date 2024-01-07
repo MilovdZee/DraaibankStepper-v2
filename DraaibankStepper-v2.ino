@@ -46,8 +46,13 @@ void setup() {
   Serial.println("Setup finished");
 
   if (WiFi.status() == WL_CONNECTED) {
-    Serial.printf("Checking for firmware updates... (currently %d)\n", CURRENT_FIRMWARE_VERSION);
+    char buffer[BUFFER_SIZE];
+    snprintf(buffer, BUFFER_SIZE, "Checking for firmware updates... (installed v%d)\n", CURRENT_FIRMWARE_VERSION);
+    show_status_label(buffer, false);
+    lv_timer_handler();
+    Serial.println(buffer);
     int newest_version = get_update_version();
+    hide_status_label();
     if (newest_version > CURRENT_FIRMWARE_VERSION) {
       show_status_label("Updating firmware...", false);
       lv_timer_handler();
