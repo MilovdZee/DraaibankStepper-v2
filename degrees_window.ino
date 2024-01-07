@@ -8,8 +8,6 @@
 
 #define POSITIONS 1000
 
-#define BUFFER_SIZE 30
-
 lv_obj_t *degrees_win;
 lv_obj_t *degrees_spinner;
 lv_obj_t *current_degree_step_label;

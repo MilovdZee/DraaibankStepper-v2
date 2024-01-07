@@ -19,6 +19,10 @@
 #define OTA_PASSWORD "DraaibankStepperPassword"
 #define OTA_HOSTNAME "DraaibankStepper"
 
+#define BUFFER_SIZE 150
+
+#define ERROR_VALUE -1
+
 // NTP server
 const char *ntpServer = "pool.ntp.org";
 

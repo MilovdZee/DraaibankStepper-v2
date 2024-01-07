@@ -4,6 +4,7 @@
 #include <lvgl.h>
 #include <Preferences.h>
 #include <WiFi.h>
+#include <WiFiClientSecure.h>
 #include <ArduinoOTA.h>
 #include <Update.h>
 #include "esp_sntp.h"
@@ -43,6 +44,9 @@ void setup() {
   }
 
   Serial.println("Setup finished");
+
+  int newest_version = get_update_version();
+  if(newest_version != ERROR_VALUE) read_firmware(newest_version);
 }
 
 long position = 0;
