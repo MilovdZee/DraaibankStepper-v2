@@ -6,6 +6,8 @@ button to go to the next tooth.
 
 It is also possible to do steps based on the entered angle.
 
+<img src="https://raw.githubusercontent.com/MilovdZee/DraaibankStepper-v2/main/images/main_screen.jpeg" height=300/> <img src="https://raw.githubusercontent.com/MilovdZee/DraaibankStepper-v2/main/images/teeth_screen.jpeg" height=300/> <img src="https://raw.githubusercontent.com/MilovdZee/DraaibankStepper-v2/main/images/degrees_screen.jpeg" height=300/>
+
 ## hardware ##
 This is a sketch for the following:
 - ESP32-2432S028 (ESP32, display combo)
