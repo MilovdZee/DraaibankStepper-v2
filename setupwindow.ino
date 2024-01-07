@@ -56,7 +56,7 @@ void setup_window(boolean show_close_button) {
   brightness_input = input_slider(setup_win, "Brightness: ", 210, settings.brightness);
 
   char buffer[BUFFER_SIZE];
-  snprintf(buffer, BUFFER_SIZE, "Version: %d", CURRENT_FIRMWARE_VERSION);
+  snprintf(buffer, BUFFER_SIZE, "Firmware version: %d, MilovdZee", CURRENT_FIRMWARE_VERSION);
   label(setup_win, buffer, 0, 240);
 }
 
