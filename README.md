@@ -11,6 +11,16 @@ This is a sketch for the following:
 - ESP32-2432S028 (ESP32, display combo)
 - Hanpose CL57 (but any stepper driver will work)
 
+## software ##
+After the initial load the firmware checks for updates. If the device does not have internet access but does have wifi then a local OTA update can also be done.
+
+Steps:
+- install python
+- download [espota.py](https://github.com/esp8266/Arduino/blob/master/tools/espota.py)
+- download the lates `bin` file from [firmware](https://github.com/MilovdZee/DraaibankStepper-v2/tree/main/firmware)
+- setup wifi on the device and note the `ip address`
+- run `python espota.py -r -i <ip address> --auth=DraaibankStepperPassword -f <firmware file>`
+
 ## setup ##
 Copy the file `lv_conf.h`
 1. simply next to the `lvgl` library folder
