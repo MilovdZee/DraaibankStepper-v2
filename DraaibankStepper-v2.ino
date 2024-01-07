@@ -45,8 +45,13 @@ void setup() {
 
   Serial.println("Setup finished");
 
+  Serial.printf("Checking for firmware updates... (currently %d)\n", CURRENT_FIRMWARE_VERSION);
   int newest_version = get_update_version();
-  if(newest_version != ERROR_VALUE) read_firmware(newest_version);
+  if(newest_version > CURRENT_FIRMWARE_VERSION) {
+    show_status_label("Updating firmware...", false);
+    lv_timer_handler();
+    read_firmware(newest_version);
+  }
 }
 
 long position = 0;

@@ -59,7 +59,7 @@ long read_content_length_from_headers() {
 }
 
 boolean connect_to_host() {
-  if (WiFi.status() != WL_CONNECTED) return ERROR_VALUE;
+  if (WiFi.status() != WL_CONNECTED) return false;
 
   // ignore certificates
   client.setInsecure();
@@ -115,10 +115,10 @@ void read_firmware(int version) {
 
   if (check_for_data()) {
     long content_length = read_content_length_from_headers();
-    if (content_length != ERROR_VALUE && client.available()) {
+    if (content_length != ERROR_VALUE) {
       bool can_begin = Update.begin(content_length);
       if (can_begin) {
-        Serial.printf("Begin OTA of %ld bytes...", content_length);
+        Serial.printf("Begin OTA of %ld bytes...\n", content_length);
         size_t written = Update.writeStream(client);
 
         if (written == content_length) {
