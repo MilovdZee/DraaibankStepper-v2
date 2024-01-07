@@ -54,6 +54,10 @@ void setup_window(boolean show_close_button) {
   acceleration_input = input_line(setup_win, "Acceleration: ", 120, String(settings.acceleration).c_str());
   steps_per_revolution_input = input_line(setup_win, "Steps per rev: ", 160, String(settings.steps_per_revolution).c_str());
   brightness_input = input_slider(setup_win, "Brightness: ", 210, settings.brightness);
+
+  char buffer[BUFFER_SIZE];
+  snprintf(buffer, BUFFER_SIZE, "Version: %d", CURRENT_FIRMWARE_VERSION);
+  label(setup_win, buffer, 0, 240);
 }
 
 void save_settings() {
