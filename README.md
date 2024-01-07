@@ -12,12 +12,12 @@ This is a sketch for the following:
 - Hanpose CL57 (but any stepper driver will work)
 
 ## software ##
-After the initial load the firmware checks for updates. If the device does not have internet access but does have wifi then a local OTA update can also be done.
+After the initial load the firmware checks for updates on github. If the device does not have internet access but does have wifi then a local OTA update can also be done.
 
 Steps:
 - install python
 - download [espota.py](https://github.com/esp8266/Arduino/blob/master/tools/espota.py)
-- download the lates `bin` file from [firmware](https://github.com/MilovdZee/DraaibankStepper-v2/tree/main/firmware)
+- download the latest `.bin` file from [firmware](https://github.com/MilovdZee/DraaibankStepper-v2/tree/main/firmware)
 - setup wifi on the device and note the `ip address`
 - run `python espota.py -r -i <ip address> --auth=DraaibankStepperPassword -f <firmware file>`
 
